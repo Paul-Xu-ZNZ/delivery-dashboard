@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交付时效数据看板 | 2026年5月</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --blue: #3b82f6;
+    --blue-light: #eff6ff;
+    --red: #ef4444;
+    --red-light: #fef2f2;
+    --amber: #f59e0b;
+    --amber-light: #fffbeb;
+    --green: #10b981;
+    --green-light: #ecfdf5;
+    --purple: #8b5cf6;
+    --purple-light: #f5f3ff;
+    --cyan: #06b6d4;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .dashboard {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .header h1 span { color: var(--blue); }
+  .header .meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .header .meta strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid transparent;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .kpi-card.blue { border-left-color: var(--blue); }
+  .kpi-card.red { border-left-color: var(--red); }
+  .kpi-card.amber { border-left-color: var(--amber); }
+  .kpi-card.green { border-left-color: var(--green); }
+  .kpi-card.purple { border-left-color: var(--purple); }
+  .kpi-card.cyan { border-left-color: var(--cyan); }
+
+  .kpi-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .kpi-value {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .kpi-card.blue .kpi-value { color: var(--blue); }
+  .kpi-card.red .kpi-value { color: var(--red); }
+  .kpi-card.amber .kpi-value { color: var(--amber); }
+  .kpi-card.green .kpi-value { color: var(--green); }
+  .kpi-card.purple .kpi-value { color: var(--purple); }
+  .kpi-card.cyan .kpi-value { color: var(--cyan); }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .chart-grid .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .card-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+  .card canvas {
+    max-height: 320px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    background: #f8fafc;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .data-table tr:hover td {
+    background: #f8fafc;
+  }
+  .data-table .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .data-table .highlight-red {
+    color: var(--red);
+    font-weight: 700;
+  }
+  .data-table .highlight-green {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-amber { background: var(--amber-light); color: #b45309; }
+  .tag-green { background: var(--green-light); color: #059669; }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+
+  .reason-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .reason-label {
+    min-width: 120px;
+    font-size: 13px;
+    text-align: right;
+    color: var(--text);
+  }
+  .reason-bar-bg {
+    flex: 1;
+    height: 28px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .reason-bar {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.6s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    min-width: fit-content;
+  }
+  .reason-count {
+    min-width: 40px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* Heatmap table for delivery metrics */
+  .heatmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .heatmap-table th {
+    background: #f8fafc;
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    font-size: 12px;
+  }
+  .heatmap-table th:first-child {
+    text-align: left;
+  }
+  .heatmap-table td {
+    padding: 12px 16px;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    font-variant-numeric: tabular-nums;
+  }
+  .heatmap-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .heatmap-table tbody tr:hover td {
+    background: #f8fafc;
+  }
+  .heatmap-table .total-row td {
+    font-weight: 700;
+    background: #f8fafc;
+    border-top: 2px solid var(--border);
+  }
+  .heat-0 { background: #ecfdf5; color: #059669; }
+  .heat-1 { background: #fefce8; color: #a16207; }
+  .heat-2 { background: #fef2f2; color: #dc2626; }
+
+  /* No-meeting bar chart style */
+  .no-meeting-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .no-meeting-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .no-meeting-name {
+    min-width: 70px;
+    font-size: 12px;
+    color: var(--text);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .no-meeting-bar-bg {
+    flex: 1;
+    height: 24px;
+    background: #f1f5f9;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .no-meeting-bar {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    min-width: fit-content;
+  }
+  .no-meeting-val {
+    min-width: 24px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: right;
+  }
+
+  /* Monthly trend: grouped bar */
+  .trend-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .trend-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .trend-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .chart-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .dashboard { padding: 12px; }
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 32px 0 16px 0;
+    padding-left: 12px;
+    border-left: 3px solid var(--blue);
+  }
+</style>
+</head>
+<body>
+<div class="dashboard">
+  <div class="header">
+    <div>
+      <h1><span>交付时效</span>数据看板</h1>
+      <div class="meta">数据周期：<strong>5月11日 — 5月17日</strong></div>
+    </div>
+    <div class="meta">
+      更新时间：2026-05-18
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- Section: 提纲设置逾期 (Sheet1) -->
+  <div class="section-title">提纲设置逾期分析</div>
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-title">按售后主管 · 提纲设置逾期量</div>
+      <div class="card-subtitle">数据来源：Sheet1 · 本周各主管超时客户数</div>
+      <canvas id="chartOutlinePerson"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">按部门 · 提纲设置逾期量</div>
+      <div class="card-subtitle">数据来源：Sheet1 · 各部门超时客户数及超时率</div>
+      <canvas id="chartOutlineDept"></canvas>
+    </div>
+  </div>
+
+  <!-- Section: 提纲设置延期原因 (Sheet3, standalone) -->
+  <div class="section-title">提纲设置延期原因</div>
+  <div class="chart-grid">
+    <div class="card full-width">
+      <div class="card-title">延期原因分布</div>
+      <div class="card-subtitle">数据来源：Sheet3 · 按延期原因统计的频次（Top 10）</div>
+      <canvas id="chartOutlineReasons"></canvas>
+    </div>
+  </div>
+
+  <!-- Section: 首次沟通 -->
+  <div class="section-title">首次沟通时效分析</div>
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-title">按售后主管 · 首次沟通逾期</div>
+      <div class="card-subtitle">超时 / 准时 / 无有效数据</div>
+      <canvas id="chartCommPerson"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">按部门 · 首次沟通逾期</div>
+      <div class="card-subtitle">各部门沟通时效分布</div>
+      <canvas id="chartCommDept"></canvas>
+    </div>
+  </div>
+
+  <!-- Section: 平均交稿时间 - REDESIGNED as heatmap table -->
+  <div class="section-title">部门交付时效</div>
+  <div class="chart-grid">
+    <div class="card full-width">
+      <div class="card-title">部门 × 文书类型 · 交付时效总览</div>
+      <div class="card-subtitle">平均交付天数 | 完成量 | 超期率（颜色越深代表超期率越高）</div>
+      <div style="overflow-x: auto;">
+        <table class="heatmap-table" id="deliveryHeatmap">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: 月度趋势 - REDESIGNED -->
+  <div class="section-title">月度趋势</div>
+  <div class="chart-grid">
+    <div class="card full-width">
+      <div class="card-title">月度交付时效对比</div>
+      <div class="card-subtitle">本月 vs 上月 · 各部门平均交付天数变化</div>
+      <canvas id="chartMonthlyTrend"></canvas>
+    </div>
+  </div>
+
+  <!-- Section: 网申变更 -->
+  <div class="section-title">网申时间变更分析</div>
+  <div class="chart-grid">
+    <div class="card full-width">
+      <div class="card-title">修改预计网申时间 · 原因分布</div>
+      <div class="card-subtitle">本周共 48 次网申时间变更，按原因归类统计</div>
+      <div id="reasonBars"></div>
+    </div>
+  </div>
+
+  <!-- Section: AI率分布 -->
+  <div class="section-title">AI率分布分析</div>
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-title">按文案主管 · AI率分布</div>
+      <div class="card-subtitle">共 3000 篇文案，按文案直属上级统计 AI 率档位分布</div>
+      <canvas id="chartAiRateSupervisor"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">按部门 · AI率分布</div>
+      <div class="card-subtitle">各部门 AI 率档位占比（0-20 / 20-50 / 50+）</div>
+      <canvas id="chartAiRateDept"></canvas>
+    </div>
+  </div>
+
+  <!-- Section: 无腾会记录 - REDESIGNED -->
+  <div class="section-title">异常数据关注</div>
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-title">无腾会记录统计</div>
+      <div class="card-subtitle">无腾讯会议记录的客户数量，按售后主管分布</div>
+      <div id="noMeetingBars"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">售后主管提纲逾期明细</div>
+      <div class="card-subtitle">数据来源：Sheet1 · 本周各主管超时客户数</div>
+      <div style="overflow-x: auto;">
+        <table class="data-table" id="outlineDetailTable">
+          <thead>
+            <tr>
+              <th>售后主管</th>
+              <th class="num">客户总数</th>
+              <th class="num">超时客户</th>
+              <th class="num">超时率</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {"kpis":{"total_clients":147,"outline_overdue":3,"outline_overdue_rate":2.04,"comm_overdue":12,"avg_delivery_days":6.1,"delivery_overdue_count":26,"no_meeting_count":49},"person_outline":[{"time":"5.11-5.17","person":"陈娜","total_clients":22,"total_overdue":1},{"time":"5.11-5.17","person":"高伟杰","total_clients":22,"total_overdue":1},{"time":"5.11-5.17","person":"刘晓楠","total_clients":30,"total_overdue":1},{"time":"5.11-5.17","person":"陈燕","total_clients":18,"total_overdue":0},{"time":"5.11-5.17","person":"黄雪桐","total_clients":9,"total_overdue":0},{"time":"5.11-5.17","person":"朱钰茜","total_clients":6,"total_overdue":0},{"time":"5.11-5.17","person":"梁佳鑫","total_clients":2,"total_overdue":0},{"time":"5.11-5.17","person":"葛丹丹","total_clients":0,"total_overdue":0},{"time":"5.11-5.17","person":"袁嘉艺","total_clients":5,"total_overdue":0},{"time":"5.11-5.17","person":"谢子月","total_clients":12,"total_overdue":0},{"time":"5.11-5.17","person":"谷伟","total_clients":0,"total_overdue":0},{"time":"5.11-5.17","person":"陆倩倩","total_clients":0,"total_overdue":0},{"time":"5.11-5.17","person":"姚家鑫","total_clients":10,"total_overdue":0},{"time":"5.11-5.17","person":"赵倩倩","total_clients":13,"total_overdue":0}],"dept_outline":[{"dept":"总体","total_clients":147,"total_overdue":3,"overdue_rate":2.04},{"dept":"交付一部","total_clients":70,"total_overdue":2,"overdue_rate":2.86},{"dept":"交付二部","total_clients":50,"total_overdue":1,"overdue_rate":2.0},{"dept":"交付三部一组","total_clients":11,"total_overdue":0,"overdue_rate":0.0},{"dept":"交付三部二组","total_clients":18,"total_overdue":0,"overdue_rate":0.0}],"outline_reason_list":[{"reason":"初次","count":6},{"reason":"期末考试ing","count":5},{"reason":"今天刚进群","count":4},{"reason":"学生还未提交提纲","count":2},{"reason":"补充信息","count":2},{"reason":"推荐信可以稍迟，太早了来不及准备","count":2},{"reason":"未定校","count":2},{"reason":"补充内容","count":2},{"reason":"客户更新经历","count":1},{"reason":"1","count":1},{"reason":"补充材料","count":1},{"reason":"学生说需要多一点时间","count":1}],"person_comm":[{"person":"陈娜","total":22,"overdue":4,"ontime":16,"no_join_group":6,"no_meeting":6,"no_data":6},{"person":"陈燕","total":18,"overdue":0,"ontime":10,"no_join_group":7,"no_meeting":8,"no_data":8},{"person":"高伟杰","total":22,"overdue":1,"ontime":22,"no_join_group":0,"no_meeting":0,"no_data":0},{"person":"葛丹丹","total":0,"overdue":0,"ontime":0,"no_join_group":0,"no_meeting":0,"no_data":0},{"person":"谷伟","total":0,"overdue":0,"ontime":0,"no_join_group":0,"no_meeting":0,"no_data":0},{"person":"刘晓楠","total":30,"overdue":0,"ontime":22,"no_join_group":7,"no_meeting":8,"no_data":8},{"person":"陆倩倩","total":0,"overdue":0,"ontime":0,"no_join_group":0,"no_meeting":0,"no_data":0},{"person":"谢子月","total":12,"overdue":1,"ontime":11,"no_join_group":1,"no_meeting":1,"no_data":1},{"person":"姚家鑫","total":10,"overdue":0,"ontime":9,"no_join_group":1,"no_meeting":1,"no_data":1},{"person":"袁嘉艺","total":5,"overdue":1,"ontime":4,"no_join_group":0,"no_meeting":1,"no_data":1},{"person":"赵倩倩","total":13,"overdue":2,"ontime":10,"no_join_group":3,"no_meeting":3,"no_data":3},{"person":"朱钰茜","total":6,"overdue":3,"ontime":6,"no_join_group":0,"no_meeting":0,"no_data":0},{"person":"黄雪桐","total":9,"overdue":0,"ontime":6,"no_join_group":1,"no_meeting":3,"no_data":3},{"person":"梁佳鑫","total":2,"overdue":0,"ontime":1,"no_join_group":0,"no_meeting":1,"no_data":1}],"dept_comm":[{"dept":"总体","total":147,"overdue":12,"ontime":117,"no_join_group":26,"no_meeting":32,"no_data":32},{"dept":"交付一部","total":70,"overdue":4,"ontime":48,"no_join_group":20,"no_meeting":22,"no_data":22},{"dept":"交付二部","total":50,"overdue":4,"ontime":45,"no_join_group":4,"no_meeting":5,"no_data":5},{"dept":"交付三部一组","total":11,"overdue":0,"ontime":7,"no_join_group":1,"no_meeting":4,"no_data":4},{"dept":"交付三部二组","total":18,"overdue":4,"ontime":17,"no_join_group":1,"no_meeting":1,"no_data":1}],"dept_delivery":[{"period":"5.11-5.17","dept":"交付一部","doc_type":"CV","completed":52,"overdue":0,"avg_days":5.3,"fastest":0.0,"slowest":7.3,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付一部","doc_type":"PS","completed":37,"overdue":8,"avg_days":11.1,"fastest":0.0,"slowest":24.3,"overdue_rate":21.62},{"period":"5.11-5.17","dept":"交付一部","doc_type":"RL","completed":49,"overdue":0,"avg_days":4.5,"fastest":0.0,"slowest":7.5,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付二部","doc_type":"CV","completed":62,"overdue":0,"avg_days":5.2,"fastest":0.0,"slowest":12.3,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付二部","doc_type":"PS","completed":62,"overdue":18,"avg_days":10.5,"fastest":0.1,"slowest":19.8,"overdue_rate":29.03},{"period":"5.11-5.17","dept":"交付二部","doc_type":"RL","completed":69,"overdue":0,"avg_days":4.6,"fastest":0.0,"slowest":12.5,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付三部一组","doc_type":"CV","completed":5,"overdue":0,"avg_days":4.0,"fastest":2.8,"slowest":6.3,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付三部一组","doc_type":"PS","completed":4,"overdue":0,"avg_days":4.4,"fastest":3.0,"slowest":5.8,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付三部一组","doc_type":"RL","completed":5,"overdue":0,"avg_days":3.3,"fastest":1.7,"slowest":5.0,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付三部二组","doc_type":"CV","completed":25,"overdue":0,"avg_days":3.9,"fastest":1.0,"slowest":7.3,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付三部二组","doc_type":"PS","completed":22,"overdue":0,"avg_days":5.4,"fastest":2.9,"slowest":10.0,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付三部二组","doc_type":"RL","completed":33,"overdue":0,"avg_days":3.7,"fastest":0.0,"slowest":7.5,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付四部","doc_type":"CV","completed":1,"overdue":0,"avg_days":0.0,"fastest":0.0,"slowest":0.0,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"交付四部","doc_type":"RL","completed":1,"overdue":0,"avg_days":0.0,"fastest":0.0,"slowest":0.0,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"总体","doc_type":"CV","completed":145,"overdue":0,"avg_days":4.9,"fastest":0.0,"slowest":12.3,"overdue_rate":0.0},{"period":"5.11-5.17","dept":"总体","doc_type":"PS","completed":125,"overdue":26,"avg_days":9.6,"fastest":0.0,"slowest":24.3,"overdue_rate":20.8},{"period":"5.11-5.17","dept":"总体","doc_type":"RL","completed":157,"overdue":0,"avg_days":4.3,"fastest":0.0,"slowest":12.5,"overdue_rate":0.0}],"dept_delivery_monthly":[{"period":"5月","dept":"交付一部","doc_type":"CV","completed":84,"overdue":1,"avg_days":5.9,"fastest":0.0,"slowest":17.2,"overdue_rate":1.19},{"period":"5月","dept":"交付一部","doc_type":"PS","completed":59,"overdue":16,"avg_days":11.8,"fastest":0.0,"slowest":28.4,"overdue_rate":27.12},{"period":"5月","dept":"交付一部","doc_type":"RL","completed":73,"overdue":0,"avg_days":4.3,"fastest":0.0,"slowest":7.5,"overdue_rate":0.0},{"period":"5月","dept":"交付二部","doc_type":"CV","completed":113,"overdue":2,"avg_days":5.8,"fastest":0.0,"slowest":12.3,"overdue_rate":1.77},{"period":"5月","dept":"交付二部","doc_type":"PS","completed":115,"overdue":27,"avg_days":9.6,"fastest":0.0,"slowest":65.0,"overdue_rate":23.48},{"period":"5月","dept":"交付二部","doc_type":"RL","completed":134,"overdue":2,"avg_days":5.2,"fastest":0.0,"slowest":67.3,"overdue_rate":1.49},{"period":"5月","dept":"交付三部一组","doc_type":"CV","completed":7,"overdue":0,"avg_days":5.3,"fastest":2.8,"slowest":9.1,"overdue_rate":0.0},{"period":"5月","dept":"交付三部一组","doc_type":"PS","completed":6,"overdue":0,"avg_days":4.8,"fastest":3.0,"slowest":8.2,"overdue_rate":0.0},{"period":"5月","dept":"交付三部一组","doc_type":"RL","completed":7,"overdue":0,"avg_days":3.4,"fastest":1.7,"slowest":5.9,"overdue_rate":0.0},{"period":"5月","dept":"交付三部二组","doc_type":"CV","completed":42,"overdue":0,"avg_days":4.1,"fastest":0.0,"slowest":7.3,"overdue_rate":0.0},{"period":"5月","dept":"交付三部二组","doc_type":"PS","completed":41,"overdue":1,"avg_days":7.1,"fastest":0.9,"slowest":18.5,"overdue_rate":2.44},{"period":"5月","dept":"交付三部二组","doc_type":"RL","completed":43,"overdue":0,"avg_days":4.1,"fastest":0.0,"slowest":7.5,"overdue_rate":0.0},{"period":"5月","dept":"交付四部","doc_type":"CV","completed":3,"overdue":0,"avg_days":0.4,"fastest":0.0,"slowest":1.0,"overdue_rate":0.0},{"period":"5月","dept":"交付四部","doc_type":"PS","completed":2,"overdue":0,"avg_days":1.6,"fastest":0.2,"slowest":3.1,"overdue_rate":0.0},{"period":"5月","dept":"交付四部","doc_type":"RL","completed":3,"overdue":0,"avg_days":1.3,"fastest":0.0,"slowest":3.8,"overdue_rate":0.0},{"period":"5月","dept":"总体","doc_type":"CV","completed":249,"overdue":3,"avg_days":5.4,"fastest":0.0,"slowest":17.2,"overdue_rate":1.2},{"period":"5月","dept":"总体","doc_type":"PS","completed":223,"overdue":44,"avg_days":9.5,"fastest":0.0,"slowest":65.0,"overdue_rate":19.73},{"period":"5月","dept":"总体","doc_type":"RL","completed":260,"overdue":2,"avg_days":4.7,"fastest":0.0,"slowest":67.3,"overdue_rate":0.77}],"monthly_delivery":[{"period":"4月","month":4,"dept":"交付一部","doc_type":"CV","completed":242,"overdue":3,"avg_days":6.2,"fastest":0.0,"slowest":16.9,"overdue_rate":1.24},{"period":"4月","month":4,"dept":"交付一部","doc_type":"PS","completed":202,"overdue":49,"avg_days":10.9,"fastest":0.0,"slowest":39.5,"overdue_rate":24.26},{"period":"4月","month":4,"dept":"交付一部","doc_type":"RL","completed":230,"overdue":0,"avg_days":5.3,"fastest":0.0,"slowest":12.0,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付二部","doc_type":"CV","completed":243,"overdue":2,"avg_days":3.7,"fastest":0.0,"slowest":16.8,"overdue_rate":0.82},{"period":"4月","month":4,"dept":"交付二部","doc_type":"PS","completed":167,"overdue":31,"avg_days":7.8,"fastest":0.0,"slowest":67.2,"overdue_rate":18.56},{"period":"4月","month":4,"dept":"交付二部","doc_type":"RL","completed":211,"overdue":0,"avg_days":3.3,"fastest":0.0,"slowest":12.3,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付三部一组","doc_type":"CV","completed":13,"overdue":1,"avg_days":6.2,"fastest":1.0,"slowest":16.7,"overdue_rate":7.69},{"period":"4月","month":4,"dept":"交付三部一组","doc_type":"PS","completed":13,"overdue":6,"avg_days":12.7,"fastest":2.8,"slowest":26.2,"overdue_rate":46.15},{"period":"4月","month":4,"dept":"交付三部一组","doc_type":"RL","completed":19,"overdue":0,"avg_days":4.7,"fastest":0.0,"slowest":11.8,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付三部二组","doc_type":"CV","completed":109,"overdue":0,"avg_days":2.8,"fastest":0.0,"slowest":7.4,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付三部二组","doc_type":"PS","completed":88,"overdue":2,"avg_days":6.0,"fastest":0.3,"slowest":15.4,"overdue_rate":2.27},{"period":"4月","month":4,"dept":"交付三部二组","doc_type":"RL","completed":78,"overdue":0,"avg_days":2.8,"fastest":0.0,"slowest":7.2,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付四部","doc_type":"CV","completed":7,"overdue":0,"avg_days":0.2,"fastest":0.0,"slowest":0.8,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付四部","doc_type":"PS","completed":8,"overdue":0,"avg_days":1.4,"fastest":0.0,"slowest":7.1,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"交付四部","doc_type":"RL","completed":6,"overdue":0,"avg_days":0.1,"fastest":0.0,"slowest":0.8,"overdue_rate":0.0},{"period":"4月","month":4,"dept":"总体","doc_type":"CV","completed":614,"overdue":6,"avg_days":4.6,"fastest":0.0,"slowest":16.9,"overdue_rate":0.98},{"period":"4月","month":4,"dept":"总体","doc_type":"PS","completed":478,"overdue":88,"avg_days":8.8,"fastest":0.0,"slowest":67.2,"overdue_rate":18.41},{"period":"4月","month":4,"dept":"总体","doc_type":"RL","completed":544,"overdue":0,"avg_days":4.1,"fastest":0.0,"slowest":12.3,"overdue_rate":0.0}],"reason_list":[{"reason":"语言成绩未达标","count":11},{"reason":"文书未完成","count":10},{"reason":"调整申请时间","count":7},{"reason":"学生个人原因","count":6},{"reason":"提前批相关","count":5},{"reason":"其他原因","count":4},{"reason":"材料未准备","count":3},{"reason":"未填写原因","count":2}],"ai_rate_by_supervisor":[{"name":"李倩倩","low":371,"mid":171,"high":618},{"name":"蒯冰洁","low":365,"mid":88,"high":67},{"name":"彭明珠","low":296,"mid":39,"high":35},{"name":"徐萍","low":254,"mid":66,"high":19},{"name":"郭佳佳","low":201,"mid":13,"high":2},{"name":"赵倩倩","low":111,"mid":18,"high":11},{"name":"袁嘉艺","low":50,"mid":3,"high":0},{"name":"陈娜","low":61,"mid":9,"high":4},{"name":"陈燕","low":23,"mid":43,"high":13},{"name":"高伟杰","low":20,"mid":4,"high":0},{"name":"徐逸凡","low":20,"mid":3,"high":2}],"ai_rate_by_dept":[{"dept":"交付一部","low":751,"mid":262,"high":670},{"dept":"交付二部","low":747,"mid":126,"high":80},{"dept":"交付三部二组","low":254,"mid":66,"high":19},{"dept":"交付三部一组","low":20,"mid":3,"high":2}]};
+
+// ============================================================
+// KPI Cards - FIX #2: correct units and descriptions
+// ============================================================
+const kpiConfig = [
+  { label: '本周客户总数', value: DATA.kpis.total_clients, suffix: '人', color: 'blue', sub: '交付时效相关' },
+  { label: '提纲设置逾期', value: DATA.kpis.outline_overdue, suffix: '人', color: 'red', sub: '逾期率 ' + DATA.kpis.outline_overdue_rate + '%' },
+  { label: '首次沟通逾期', value: DATA.kpis.comm_overdue, suffix: '人', color: 'amber', sub: '首次腾会沟通超时' },
+  { label: '平均交付天数', value: DATA.kpis.avg_delivery_days, suffix: '天', color: 'green', sub: '超期交付 ' + DATA.kpis.delivery_overdue_count + ' 单' },
+  { label: '无腾会记录', value: DATA.kpis.no_meeting_count, suffix: '个客户', color: 'purple', sub: '需补充会议记录' },
+
+];
+
+const kpiGrid = document.getElementById('kpiGrid');
+kpiConfig.forEach(kpi => {
+  const card = document.createElement('div');
+  card.className = 'kpi-card ' + kpi.color;
+  card.innerHTML = '<div class="kpi-label">' + kpi.label + '</div>'
+    + '<div class="kpi-value">' + kpi.value + '<span style="font-size:16px;font-weight:500;margin-left:4px">' + kpi.suffix + '</span></div>'
+    + '<div class="kpi-sub">' + kpi.sub + '</div>';
+  kpiGrid.appendChild(card);
+});
+
+// ============================================================
+// Chart defaults
+// ============================================================
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#64748b';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 16;
+
+const COLORS = {
+  cv: '#3b82f6', ps: '#f59e0b', rl: '#8b5cf6',
+  red: '#ef4444', green: '#10b981', cyan: '#06b6d4',
+  pink: '#ec4899', gray: '#94a3b8',
+};
+
+// ============================================================
+// 1. 提纲设置逾期 - 按售后主管 (Sheet1: total_overdue)
+// ============================================================
+(function() {
+  const persons = DATA.person_outline.map(p => p.person);
+  const colors = DATA.person_outline.map(p => p.total_overdue > 0 ? '#ef4444' : '#cbd5e1');
+  new Chart(document.getElementById('chartOutlinePerson'), {
+    type: 'bar',
+    data: {
+      labels: persons,
+      datasets: [
+        { label: '超时客户', data: DATA.person_outline.map(p => p.total_overdue), backgroundColor: colors, borderRadius: 3 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { title: { display: false }, legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, ticks: { stepSize: 1 } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 2. 提纲设置逾期 - 按部门 (Sheet1: total_overdue)
+// ============================================================
+(function() {
+  // Exclude 总体 row for the chart, show it in table
+  const depts = DATA.dept_outline.filter(d => d.dept !== '总体').map(d => d.dept);
+  const colors = DATA.dept_outline.filter(d => d.dept !== '总体').map(d => d.total_overdue > 0 ? '#ef4444' : '#cbd5e1');
+  new Chart(document.getElementById('chartOutlineDept'), {
+    type: 'bar',
+    data: {
+      labels: depts,
+      datasets: [
+        { label: '超时客户', data: DATA.dept_outline.filter(d => d.dept !== '总体').map(d => d.total_overdue), backgroundColor: colors, borderRadius: 3 },
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: true,
+      plugins: { title: { display: false }, legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, ticks: { stepSize: 1 } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 3. 提纲设置逾期原因
+// ============================================================
+(function() {
+  const top10 = DATA.outline_reason_list.slice(0, 10);
+  const bgColors = top10.map((r, i) => {
+    if (i < 3) return '#ef4444';
+    if (i < 6) return '#f59e0b';
+    return '#3b82f6';
+  });
+  new Chart(document.getElementById('chartOutlineReasons'), {
+    type: 'bar',
+    data: {
+      labels: top10.map(r => r.reason),
+      datasets: [{ label: '客户数', data: top10.map(r => r.count), backgroundColor: bgColors, borderRadius: 4 }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { title: { display: false }, legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, ticks: { stepSize: 2 }, grid: { color: '#f1f5f9' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 4. 首次沟通逾期 - 按售后主管
+// ============================================================
+(function() {
+  new Chart(document.getElementById('chartCommPerson'), {
+    type: 'bar',
+    data: {
+      labels: DATA.person_comm.map(p => p.person),
+      datasets: [
+        { label: '超时', data: DATA.person_comm.map(p => p.overdue), backgroundColor: '#ef4444', borderRadius: 3 },
+        { label: '准时', data: DATA.person_comm.map(p => p.ontime), backgroundColor: '#10b981', borderRadius: 3 },
+        { label: '无有效数据', data: DATA.person_comm.map(p => p.no_data), backgroundColor: '#cbd5e1', borderRadius: 3 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { title: { display: false } },
+      scales: {
+        x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, beginAtZero: true, ticks: { stepSize: 2 } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 5. 首次沟通逾期 - 按部门 (FIX #1: now has data)
+// ============================================================
+(function() {
+  new Chart(document.getElementById('chartCommDept'), {
+    type: 'bar',
+    data: {
+      labels: DATA.dept_comm.map(d => d.dept),
+      datasets: [
+        { label: '超时', data: DATA.dept_comm.map(d => d.overdue), backgroundColor: '#ef4444', borderRadius: 3 },
+        { label: '准时', data: DATA.dept_comm.map(d => d.ontime), backgroundColor: '#10b981', borderRadius: 3 },
+        { label: '无有效数据', data: DATA.dept_comm.map(d => d.no_data), backgroundColor: '#cbd5e1', borderRadius: 3 },
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: true,
+      plugins: { title: { display: false } },
+      scales: {
+        x: { stacked: true, beginAtZero: true, ticks: { stepSize: 5 } },
+        y: { stacked: true, grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 6. FIX #4: Delivery metrics as heatmap table
+// ============================================================
+(function() {
+  const table = document.getElementById('deliveryHeatmap');
+  const thead = table.querySelector('thead');
+  const tbody = table.querySelector('tbody');
+
+  // Filter to this week, exclude total rows, get unique depts
+  const entries = DATA.dept_delivery.filter(d => d.period === '5.11-5.17' && d.dept !== '总体');
+  const depts = [...new Set(entries.map(e => e.dept))];
+  const types = ['CV', 'PS', 'RL'];
+
+  // Header
+  let headerHTML = '<tr><th>部门</th>';
+  types.forEach(t => {
+    headerHTML += '<th colspan="3">' + t + '</th>';
+  });
+  headerHTML += '</tr><tr><th></th>';
+  types.forEach(() => {
+    headerHTML += '<th>平均天数</th><th>完成量</th><th>超期率</th>';
+  });
+  headerHTML += '</tr>';
+  thead.innerHTML = headerHTML;
+
+  // Body
+  let bodyHTML = '';
+  depts.forEach(dept => {
+    bodyHTML += '<tr><td>' + dept + '</td>';
+    types.forEach(type => {
+      const item = entries.find(e => e.dept === dept && e.doc_type === type);
+      if (item) {
+        const heatClass = item.overdue_rate > 20 ? 'heat-2' : item.overdue_rate > 5 ? 'heat-1' : 'heat-0';
+        bodyHTML += '<td>' + item.avg_days.toFixed(1) + '</td>';
+        bodyHTML += '<td>' + item.completed + '</td>';
+        bodyHTML += '<td class="' + heatClass + '">' + item.overdue_rate.toFixed(1) + '%</td>';
+      } else {
+        bodyHTML += '<td>-</td><td>-</td><td>-</td>';
+      }
+    });
+    bodyHTML += '</tr>';
+  });
+
+  // Total row
+  bodyHTML += '<tr class="total-row"><td>总体</td>';
+  types.forEach(type => {
+    const totalEntry = DATA.dept_delivery.find(d => d.dept === '总体' && d.doc_type === type);
+    if (totalEntry) {
+      bodyHTML += '<td>' + totalEntry.avg_days.toFixed(1) + '</td>';
+      bodyHTML += '<td>' + totalEntry.completed + '</td>';
+      bodyHTML += '<td>' + totalEntry.overdue_rate.toFixed(1) + '%</td>';
+    } else {
+      bodyHTML += '<td>-</td><td>-</td><td>-</td>';
+    }
+  });
+  bodyHTML += '</tr>';
+  tbody.innerHTML = bodyHTML;
+})();
+
+// ============================================================
+// 7. FIX #5: Monthly trend as grouped bar with data labels
+// ============================================================
+(function() {
+  // Use dept_delivery (has weekly data) and dept_delivery_monthly for this month
+  // Better: use monthly_delivery but also include current week data
+  const depts = ['\u4ea4\u4ed8\u4e00\u90e8', '\u4ea4\u4ed8\u4e8c\u90e8', '\u4ea4\u4ed8\u4e09\u90e8\u4e00\u7ec4', '\u4ea4\u4ed8\u4e09\u90e8\u4e8c\u7ec4'];
+  const types = ['CV', 'PS', 'RL'];
+  const deptColors = {
+    '\u4ea4\u4ed8\u4e00\u90e8': '#3b82f6',
+    '\u4ea4\u4ed8\u4e8c\u90e8': '#f59e0b',
+    '\u4ea4\u4ed8\u4e09\u90e8\u4e00\u7ec4': '#8b5cf6',
+    '\u4ea4\u4ed8\u4e09\u90e8\u4e8c\u7ec4': '#06b6d4',
+  };
+
+  // Build comparison: last period vs this period from dept_delivery_monthly
+  // Since we only have 3 months of limited data, show dept-level comparison
+  // Use current week data as "this week" and compare with available monthly data
+  
+  const datasets = [];
+  depts.forEach(dept => {
+    types.forEach(type => {
+      const thisWeek = DATA.dept_delivery.find(d => d.dept === dept && d.doc_type === type && d.period === '5.11-5.17');
+      // Find 4月 data from monthly_delivery
+      const lastMonth = DATA.monthly_delivery.find(d => d.dept === dept && d.doc_type === type && d.month === 4);
+      const thisMonth = DATA.dept_delivery_monthly.find(d => d.dept === dept && d.doc_type === type);
+      
+      if (thisWeek || lastMonth) {
+        const label = dept + ' ' + type;
+        const color = deptColors[dept] || '#94a3b8';
+        datasets.push({
+          label: label,
+          data: [
+            lastMonth ? lastMonth.avg_days : null,
+            thisMonth ? thisMonth.avg_days : null,
+            thisWeek ? thisWeek.avg_days : null,
+          ],
+          backgroundColor: color + 'cc',
+          borderColor: color,
+          borderWidth: 1,
+          borderRadius: 4,
+        });
+      }
+    });
+  });
+
+  // Deduplicate: only keep entries with at least some data
+  const filtered = datasets.filter(ds => ds.data.some(v => v !== null && v !== undefined));
+
+  new Chart(document.getElementById('chartMonthlyTrend'), {
+    type: 'bar',
+    data: {
+      labels: ['4月', '5月(累计)', '5月(本周)'],
+      datasets: filtered,
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        title: { display: false },
+        legend: { position: 'top', labels: { font: { size: 10 }, boxWidth: 12 } },
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, title: { display: true, text: '平均交付天数' }, grid: { color: '#f1f5f9' } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 8. 网申变更原因
+// ============================================================
+(function() {
+  const container = document.getElementById('reasonBars');
+  const maxCount = Math.max(...DATA.reason_list.map(r => r.count), 1);
+  DATA.reason_list.forEach((r, i) => {
+    const pct = (r.count / maxCount * 100).toFixed(0);
+    const color = i < 2 ? '#ef4444' : i < 5 ? '#f59e0b' : '#3b82f6';
+    container.innerHTML += '<div class="reason-bar-wrap">'
+      + '<div class="reason-label">' + r.reason + '</div>'
+      + '<div class="reason-bar-bg"><div class="reason-bar" style="width:' + pct + '%;background:' + color + '">' + r.count + '次</div></div>'
+      + '<div class="reason-count">' + r.count + '</div></div>';
+  });
+})();
+
+// ============================================================
+// 9. 售后主管提纲逾期明细表 (Sheet1 data)
+// ============================================================
+(function() {
+  const tbody = document.querySelector('#outlineDetailTable tbody');
+  DATA.person_outline.forEach(p => {
+    const rate = p.total_clients > 0 ? (p.total_overdue / p.total_clients * 100).toFixed(1) : '0.0';
+    const status = p.total_overdue === 0
+      ? '<span class="tag tag-green">正常</span>'
+      : p.total_overdue >= 2
+        ? '<span class="tag tag-red">需关注</span>'
+        : '<span class="tag tag-amber">轻微</span>';
+    const cls = (v) => v > 0 ? 'highlight-red' : '';
+    tbody.innerHTML += '<tr>'
+      + '<td>' + p.person + '</td>'
+      + '<td class="num">' + p.total_clients + '</td>'
+      + '<td class="num ' + cls(p.total_overdue) + '" style="font-weight:700">' + p.total_overdue + '</td>'
+      + '<td class="num">' + rate + '%</td>'
+      + '<td>' + status + '</td></tr>';
+  });
+})();
+
+// ============================================================
+// 10. FIX #6: No-meeting as horizontal bar chart (no duplicate colors)
+// ============================================================
+(function() {
+  const container = document.getElementById('noMeetingBars');
+  // Use no_data from person_comm (represents customers with no meeting records)
+  const items = DATA.person_comm
+    .filter(p => p.no_data > 0)
+    .map(p => ({ name: p.person, count: p.no_data }))
+    .sort((a, b) => b.count - a.count);
+  
+  const maxVal = Math.max(...items.map(i => i.count), 1);
+  
+  // Generate distinct colors using HSL
+  const total = items.length;
+  items.forEach((item, i) => {
+    const hue = (i * 360 / total + 200) % 360; // Start from blue range, spread evenly
+    const color = 'hsl(' + hue + ', 65%, 55%)';
+    const pct = (item.count / maxVal * 100).toFixed(0);
+    container.innerHTML += '<div class="no-meeting-item">'
+      + '<div class="no-meeting-name">' + item.name + '</div>'
+      + '<div class="no-meeting-bar-bg"><div class="no-meeting-bar" style="width:' + pct + '%;background:' + color + '">' + item.count + '</div></div>'
+      + '<div class="no-meeting-val">' + item.count + '</div></div>';
+  });
+})();
+
+// ============================================================
+// 11. AI率分布 - 按文案主管
+// ============================================================
+(function() {
+  const items = DATA.ai_rate_by_supervisor;
+  const tierColors = { low: '#10b981', mid: '#f59e0b', high: '#ef4444' };
+  const tierLabels = { low: '0-20%', mid: '20-50%', high: '50%+' };
+  new Chart(document.getElementById('chartAiRateSupervisor'), {
+    type: 'bar',
+    data: {
+      labels: items.map(i => i.name),
+      datasets: [
+        { label: '0-20%', data: items.map(i => i.low), backgroundColor: tierColors.low, borderRadius: 2 },
+        { label: '20-50%', data: items.map(i => i.mid), backgroundColor: tierColors.mid, borderRadius: 2 },
+        { label: '50%+', data: items.map(i => i.high), backgroundColor: tierColors.high, borderRadius: 2 },
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { title: { display: false }, legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } } },
+      scales: {
+        x: { stacked: true, beginAtZero: true, grid: { color: '#f1f5f9' } },
+        y: { stacked: true, grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// 12. AI率分布 - 按部门
+// ============================================================
+(function() {
+  const items = DATA.ai_rate_by_dept;
+  const tierColors = { low: '#10b981', mid: '#f59e0b', high: '#ef4444' };
+  new Chart(document.getElementById('chartAiRateDept'), {
+    type: 'bar',
+    data: {
+      labels: items.map(i => i.dept),
+      datasets: [
+        { label: '0-20%', data: items.map(i => i.low), backgroundColor: tierColors.low, borderRadius: 4 },
+        { label: '20-50%', data: items.map(i => i.mid), backgroundColor: tierColors.mid, borderRadius: 4 },
+        { label: '50%+', data: items.map(i => i.high), backgroundColor: tierColors.high, borderRadius: 4 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { title: { display: false }, legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } } },
+      scales: {
+        x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, beginAtZero: true, grid: { color: '#f1f5f9' } }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
