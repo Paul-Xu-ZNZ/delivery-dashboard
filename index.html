@@ -405,10 +405,10 @@
   <div class="header">
     <div>
       <h1><span>交付时效</span>数据看板</h1>
-      <div class="meta">数据周期：<strong>6月29日 — 7月5日</strong></div>
+      <div class="meta">数据周期：<strong>7月6日 — 7月12日</strong></div>
     </div>
     <div class="meta">
-      更新时间：2026-07-06
+      更新时间：2026-07-13
     </div>
   </div>
 
@@ -536,337 +536,405 @@
 
 <script>
 const DATA = {
-    "period": "6.29-7.05",
-    "updated": "2026-07-06",
+    "period": "7.06-7.12",
+    "updated": "2026-07-13",
     "kpis": {
-      "total_clients": 177,
-      "outline_overdue": 11,
-      "outline_overdue_rate": 6.2,
-      "comm_overdue": 6,
-      "avg_delivery_days": 8.6,
-      "delivery_overdue_count": 78,
-      "no_meeting_count": 53,
-      "overdue_apply_count": 10
+      "total_clients": 132,
+      "outline_overdue": 6,
+      "outline_overdue_rate": 4.5,
+      "comm_overdue": 5,
+      "avg_delivery_days": 13.0,
+      "delivery_overdue_count": 56,
+      "no_meeting_count": 44,
+      "overdue_apply_count": 25
     },
     "person_outline": [
       {
         "person": "陈娜",
         "dept": "交付一部",
-        "total_clients": 8,
+        "total_clients": 3,
         "total_overdue": 0
       },
       {
         "person": "陈燕",
         "dept": "交付六部",
-        "total_clients": 15,
-        "total_overdue": 1
+        "total_clients": 8,
+        "total_overdue": 0
       },
       {
         "person": "高伟杰",
         "dept": "交付七部",
-        "total_clients": 10,
+        "total_clients": 11,
         "total_overdue": 1
       },
       {
         "person": "葛丹丹",
         "dept": "交付三部",
-        "total_clients": 1,
+        "total_clients": 0,
         "total_overdue": 0
       },
       {
         "person": "刘晓楠",
         "dept": "交付一部",
-        "total_clients": 21,
-        "total_overdue": 1
+        "total_clients": 18,
+        "total_overdue": 2
       },
       {
         "person": "陆倩倩",
         "dept": "交付二部",
-        "total_clients": 9,
+        "total_clients": 7,
         "total_overdue": 0
       },
       {
         "person": "谢子月",
         "dept": "交付三部",
-        "total_clients": 9,
-        "total_overdue": 2
+        "total_clients": 8,
+        "total_overdue": 0
       },
       {
         "person": "姚家鑫",
         "dept": "交付二部",
-        "total_clients": 22,
-        "total_overdue": 2
+        "total_clients": 13,
+        "total_overdue": 0
       },
       {
         "person": "袁嘉艺",
         "dept": "交付二部",
-        "total_clients": 18,
-        "total_overdue": 0
+        "total_clients": 12,
+        "total_overdue": 1
       },
       {
         "person": "赵倩倩",
         "dept": "交付二部",
-        "total_clients": 3,
+        "total_clients": 2,
         "total_overdue": 0
       },
       {
         "person": "梁家鑫",
         "dept": "交付三部",
-        "total_clients": 6,
+        "total_clients": 4,
         "total_overdue": 0
       },
       {
         "person": "胡磊",
         "dept": "交付一部",
-        "total_clients": 13,
-        "total_overdue": 1
+        "total_clients": 11,
+        "total_overdue": 0
       },
       {
         "person": "王婉秋",
         "dept": "交付七部",
-        "total_clients": 16,
-        "total_overdue": 1
+        "total_clients": 10,
+        "total_overdue": 0
       },
       {
         "person": "夏艺",
         "dept": "交付六部",
-        "total_clients": 16,
-        "total_overdue": 0
+        "total_clients": 19,
+        "total_overdue": 2
       },
       {
         "person": "谷伟",
         "dept": "交付二部",
-        "total_clients": 1,
+        "total_clients": 0,
         "total_overdue": 0
       },
       {
         "person": "蔡丽佳",
         "dept": "交付一部",
-        "total_clients": 6,
+        "total_clients": 3,
         "total_overdue": 0
       },
       {
         "person": "朱静",
         "dept": "交付一部",
         "total_clients": 3,
-        "total_overdue": 2
+        "total_overdue": 0
       }
     ],
     "dept_outline": [
       {
         "dept": "交付一部",
-        "total": 51,
-        "overdue": 4
+        "total": 38,
+        "overdue": 2
       },
       {
         "dept": "交付二部",
-        "total": 53,
-        "overdue": 2
-      },
-      {
-        "dept": "交付三部",
-        "total": 16,
-        "overdue": 2
-      },
-      {
-        "dept": "交付六部",
-        "total": 31,
+        "total": 34,
         "overdue": 1
       },
       {
-        "dept": "交付七部",
-        "total": 26,
+        "dept": "交付三部",
+        "total": 12,
+        "overdue": 0
+      },
+      {
+        "dept": "交付六部",
+        "total": 27,
         "overdue": 2
       },
       {
+        "dept": "交付七部",
+        "total": 21,
+        "overdue": 1
+      },
+      {
         "dept": "总体",
-        "total": 177,
-        "overdue": 11
+        "total": 132,
+        "overdue": 6
       }
     ],
     "outline_reason_counts": [
       {
-        "reason": "调整",
-        "count": 9
+        "reason": "明天语音",
+        "count": 8
       },
       {
-        "reason": "协商调整",
-        "count": 7
-      },
-      {
-        "reason": "考雅思中，要求往后顺延",
-        "count": 7
-      },
-      {
-        "reason": "28春季",
+        "reason": "期末考试",
         "count": 6
       },
       {
-        "reason": "客户备考雅思",
+        "reason": "尚未进群",
+        "count": 6
+      },
+      {
+        "reason": "客户推迟语音",
+        "count": 6
+      },
+      {
+        "reason": "学生期末考试",
         "count": 5
       },
       {
-        "reason": "客户7月2日第一次语音沟通，所以把开始日期修改到7月2日",
+        "reason": "8号才语音",
         "count": 5
       },
       {
-        "reason": "客户刚定校",
+        "reason": "学生刚回国 表示周三可以提交文书",
         "count": 5
       },
       {
-        "reason": "学生7月6日考完期末考",
+        "reason": "客户明天语音沟通。",
         "count": 5
       },
       {
-        "reason": "首次设置",
+        "reason": "7.9和客户进行第一次语音沟通，所以把开始时间调整到7.9",
         "count": 5
       },
       {
-        "reason": "6月30日才第一次语音沟通，所以把开始时间延迟到第一次语音沟通完",
+        "reason": "7.7语音",
         "count": 5
       },
       {
-        "reason": "客户时间",
-        "count": 4
+        "reason": "学生不申请提前批",
+        "count": 5
       },
       {
-        "reason": "学生7.10才有时间语音，优先期末考试",
-        "count": 4
+        "reason": "学生在备考雅思",
+        "count": 5
       },
       {
-        "reason": "学生准备时间",
-        "count": 4
+        "reason": "7.8和客户第一次语音沟通，所以把开始时间全部调整到7.8",
+        "count": 5
       },
       {
-        "reason": "/",
-        "count": 4
+        "reason": "第一次语音时间在7号",
+        "count": 5
       },
       {
-        "reason": "加急申请，开始时间可以改为邮件时间+2天",
-        "count": 4
-      },
-      {
-        "reason": "最近在实习，给客户周末填写的时间",
-        "count": 4
-      },
-      {
-        "reason": "学生最近在考试",
-        "count": 4
-      },
-      {
-        "reason": "13号前要考试",
-        "count": 4
-      },
-      {
-        "reason": "新增科研经历",
-        "count": 3
-      },
-      {
-        "reason": "7.10期末考试结束，语音跟跟学生沟通达成一致",
-        "count": 3
-      },
-      {
-        "reason": "客户7-11日考完雅思",
-        "count": 3
-      },
-      {
-        "reason": "学生期末考",
-        "count": 3
-      },
-      {
-        "reason": "CV和RL提前；PS前期老师备注8号开始创作",
-        "count": 3
+        "reason": "需要延长时间",
+        "count": 5
       },
       {
         "reason": "往前调",
+        "count": 5
+      },
+      {
+        "reason": "9号第一次语音沟通",
+        "count": 5
+      },
+      {
+        "reason": "提前批申请递交",
+        "count": 5
+      },
+      {
+        "reason": "今天刚语音",
+        "count": 5
+      },
+      {
+        "reason": "跟客户敲定7.10语音，所以开始时间为7.10是最好的。",
+        "count": 5
+      },
+      {
+        "reason": "从语音时间开始算",
+        "count": 4
+      },
+      {
+        "reason": "学生在考雅思，要求都放在7月底-8月初",
+        "count": 4
+      },
+      {
+        "reason": "文书老师首次语音",
+        "count": 4
+      },
+      {
+        "reason": "学生是7号语音的",
+        "count": 4
+      },
+      {
+        "reason": "从今天开始准备",
+        "count": 4
+      },
+      {
+        "reason": "截止日期是今天",
         "count": 3
       },
       {
-        "reason": "未定校",
+        "reason": "还要调整选校",
         "count": 3
       },
       {
-        "reason": "语音沟通后，学生要求",
+        "reason": "重新设置提醒时间，为了提醒学生尽快完成文书提纲。",
         "count": 3
       },
       {
-        "reason": "客户近期准备期末考试",
+        "reason": "学生外出旅游",
         "count": 3
       },
       {
-        "reason": "往前调没有往后调",
+        "reason": "未按时提交",
+        "count": 3
+      },
+      {
+        "reason": "调整下，和文书老师约了个语音",
+        "count": 3
+      },
+      {
+        "reason": "今天刚约上语音",
+        "count": 3
+      },
+      {
+        "reason": "新增选校",
+        "count": 3
+      },
+      {
+        "reason": "文案首次语音，但是文案最近写提前批太忙了，要后置语音时间",
+        "count": 3
+      },
+      {
+        "reason": "学生启动比较晚，考试的",
+        "count": 3
+      },
+      {
+        "reason": "修改",
         "count": 2
       },
       {
-        "reason": "期末考试 不着急申请",
+        "reason": "推荐信和ps的ddl重合了",
         "count": 2
       },
       {
-        "reason": "选校不确定，还在考虑中",
+        "reason": "学生近期有事要忙",
         "count": 2
       },
       {
-        "reason": "学生这两天没空语音",
+        "reason": "海本学生联系推荐人较慢",
         "count": 2
       },
       {
-        "reason": "联系推荐人受阻需要延后",
+        "reason": "首次语音",
         "count": 2
       },
       {
-        "reason": "学生准备",
+        "reason": "需要无提纲语音沟通",
         "count": 2
       },
       {
-        "reason": "学生刚刚定校，还未出雅思申请，不赶NUS提前批的申请",
+        "reason": "提醒学生尽快完成推荐人查找",
         "count": 2
       },
       {
-        "reason": "美本联系rl",
+        "reason": "本周五跟文书老师语音沟通后，再来填写",
         "count": 2
       },
       {
-        "reason": "学生正在填写",
+        "reason": "学生有雅思考试",
         "count": 2
       },
       {
-        "reason": "P人",
+        "reason": "英国的推荐老师一般要 PS 的，等 PS 完成后再提交推荐人信息",
         "count": 2
       },
       {
-        "reason": "备考雅思中",
+        "reason": "文书老师计划语音",
         "count": 2
       },
       {
-        "reason": "再确认下素材",
+        "reason": "忙着实习还没有邀请推荐人",
         "count": 2
       },
       {
-        "reason": "新增方向",
+        "reason": "小学期，有考试",
         "count": 2
       },
       {
-        "reason": "刚签订选校单",
+        "reason": "7.22 考雅思",
         "count": 2
       },
       {
-        "reason": "需要联系海本老师",
+        "reason": "学生可能要换专业",
         "count": 2
       },
       {
-        "reason": "新增实习经历",
+        "reason": "客户初次定校，调整ps提纲交稿时间～",
+        "count": 2
+      },
+      {
+        "reason": "暑期不方便联系老师",
+        "count": 2
+      },
+      {
+        "reason": "刚刚定校",
+        "count": 2
+      },
+      {
+        "reason": "推荐信还需要等学生确定过老师意向",
+        "count": 2
+      },
+      {
+        "reason": "调整方向",
         "count": 1
       },
       {
-        "reason": "学生最近刚刚定校",
+        "reason": "新增一段实习经历",
         "count": 1
       },
       {
-        "reason": "客户要求。",
+        "reason": "学生八月份再找",
         "count": 1
       },
       {
-        "reason": "没有更新完全",
+        "reason": "新增经历",
+        "count": 1
+      },
+      {
+        "reason": "学生需要补充素材",
+        "count": 1
+      },
+      {
+        "reason": "周末修改即可",
+        "count": 1
+      },
+      {
+        "reason": "给客户时间修改补充素材",
+        "count": 1
+      },
+      {
+        "reason": "学生在实习，需要补充的经历比较多",
+        "count": 1
+      },
+      {
+        "reason": "学生想增加一位行业推荐人",
         "count": 1
       },
       {
@@ -874,91 +942,167 @@ const DATA = {
         "count": 1
       },
       {
-        "reason": "暂时不申请",
+        "reason": "补充经历",
         "count": 1
       },
       {
-        "reason": "客户需要提交论文",
+        "reason": "1-文书老师脑暴后会进一步挖掘；\n2-暑期增加竞赛经历。",
         "count": 1
       },
       {
-        "reason": "学生7月3日-7月9日都在考试，语音沟通中要求推迟3天。所以将简历截止时间改到了12日",
+        "reason": "学生说周末提交",
         "count": 1
       },
       {
-        "reason": "学生急性阑尾炎",
+        "reason": "学生忙夏令营",
         "count": 1
       },
       {
-        "reason": "6号期末考试",
+        "reason": "学生最近电脑不在身边",
         "count": 1
       },
       {
-        "reason": "新增推荐信",
+        "reason": "要等保研结果才考虑写文书",
         "count": 1
       },
       {
-        "reason": "补充暑期实习交流经历",
+        "reason": "改",
         "count": 1
       },
       {
-        "reason": "简历",
+        "reason": "学生在期末考，晚点交",
         "count": 1
       },
       {
-        "reason": "客户需要填写",
+        "reason": "待发报告",
         "count": 1
       },
       {
-        "reason": "客户填写",
+        "reason": "学生较忙",
         "count": 1
       },
       {
-        "reason": "刚定校",
+        "reason": "无",
         "count": 1
       },
       {
-        "reason": "修改与补充部分较多。",
+        "reason": "学生出去旅游",
         "count": 1
       },
       {
-        "reason": "客户7-10考完期末考",
+        "reason": "客户要求今日提交",
         "count": 1
       },
       {
-        "reason": "学生还在找第二位推荐人",
+        "reason": "学生第一篇提纲反馈需要补充内容还没提交～",
         "count": 1
       },
       {
-        "reason": "初次调整",
+        "reason": "不着急～",
         "count": 1
       },
       {
-        "reason": "先写提前批，考完语言后准备正式批",
+        "reason": "不着急",
         "count": 1
       },
       {
-        "reason": "数据科学方向需要先申请",
+        "reason": "学生目前手头还有2个小课设，时间也紧张",
         "count": 1
       },
       {
-        "reason": "保底项目可能更换",
+        "reason": "学生想做一段时间项目以后再提供",
         "count": 1
       },
       {
-        "reason": "学生期末忙",
+        "reason": "学生周末时间修改",
         "count": 1
       },
       {
-        "reason": "新增的方向，系统里的开始时间是3月份，不太对",
+        "reason": "对于客户来说更友好。",
         "count": 1
       },
       {
-        "reason": "新增的方向，系统里自动给的ddl不太对",
+        "reason": "文书老师会约语音沟通",
         "count": 1
       },
       {
-        "reason": "学生需要再调整内容",
+        "reason": "学生拖",
+        "count": 1
+      },
+      {
+        "reason": "新增一段工作经历",
+        "count": 1
+      },
+      {
+        "reason": "实习比较忙，往后延一点",
+        "count": 1
+      },
+      {
+        "reason": "推荐人老师尚未回复",
+        "count": 1
+      },
+      {
+        "reason": "学生需要修改，要求较高",
+        "count": 1
+      },
+      {
+        "reason": "学生提出修改",
+        "count": 1
+      },
+      {
+        "reason": "学生和公司确认实习内容",
+        "count": 1
+      },
+      {
+        "reason": "还需要补充科研",
+        "count": 1
+      },
+      {
+        "reason": "客户最近刚开始一段TESOL实习，她想做一做之后写进【工作能力】板块",
+        "count": 1
+      },
+      {
+        "reason": "实习经历没写",
+        "count": 1
+      },
+      {
+        "reason": "个人陈述稍晚一点，学校里说有事",
+        "count": 1
+      },
+      {
+        "reason": "学生有事，提出想要晚提交提纲",
+        "count": 1
+      },
+      {
+        "reason": "13号才考完试",
+        "count": 1
+      },
+      {
+        "reason": "6学期成绩出来后要重新选校",
+        "count": 1
+      },
+      {
+        "reason": "调整",
+        "count": 1
+      },
+      {
+        "reason": "新增方向",
+        "count": 1
+      },
+      {
+        "reason": "学生过几天梳理实习经历内容",
+        "count": 1
+      },
+      {
+        "reason": "学生7.6这一周在考试，所以推迟到7.11提交",
+        "count": 1
+      },
+      {
+        "reason": "添加新专业",
+        "count": 1
+      },
+      {
+        "reason": "明天会约一个语音沟通，后再进行补充",
         "count": 1
       },
       {
@@ -966,35 +1110,7 @@ const DATA = {
         "count": 1
       },
       {
-        "reason": "学生忙毕业",
-        "count": 1
-      },
-      {
-        "reason": "简历后指导",
-        "count": 1
-      },
-      {
-        "reason": "提前批开放了，把ddl往前调一下push学生完成",
-        "count": 1
-      },
-      {
-        "reason": "根据ps1内容修改ps2",
-        "count": 1
-      },
-      {
-        "reason": "学生方向有调整",
-        "count": 1
-      },
-      {
-        "reason": "客户家长说之前设置的DDL超时了，看着很焦虑会掉头发",
-        "count": 1
-      },
-      {
-        "reason": "申请项目有变动",
-        "count": 1
-      },
-      {
-        "reason": "学生考完试后补充",
+        "reason": "调整时间",
         "count": 1
       }
     ],
@@ -1002,363 +1118,235 @@ const DATA = {
       {
         "person": "陈娜",
         "dept": "交付一部",
-        "ontime": 5,
-        "overdue": 1,
-        "no_data": 2,
-        "total": 8
+        "ontime": 3,
+        "overdue": 0,
+        "no_data": 0,
+        "total": 3
       },
       {
         "person": "陈燕",
         "dept": "交付六部",
-        "ontime": 6,
+        "ontime": 8,
         "overdue": 0,
-        "no_data": 9,
-        "total": 15
+        "no_data": 0,
+        "total": 8
       },
       {
         "person": "高伟杰",
         "dept": "交付七部",
-        "ontime": 6,
+        "ontime": 7,
         "overdue": 0,
         "no_data": 4,
-        "total": 10
+        "total": 11
       },
       {
         "person": "葛丹丹",
         "dept": "交付三部",
         "ontime": 0,
         "overdue": 0,
-        "no_data": 1,
-        "total": 1
+        "no_data": 0,
+        "total": 0
       },
       {
         "person": "刘晓楠",
         "dept": "交付一部",
-        "ontime": 15,
+        "ontime": 11,
         "overdue": 1,
-        "no_data": 5,
-        "total": 21
+        "no_data": 6,
+        "total": 18
       },
       {
         "person": "陆倩倩",
         "dept": "交付二部",
-        "ontime": 6,
-        "overdue": 0,
-        "no_data": 3,
-        "total": 9
+        "ontime": 4,
+        "overdue": 1,
+        "no_data": 2,
+        "total": 7
       },
       {
         "person": "谢子月",
         "dept": "交付三部",
-        "ontime": 8,
-        "overdue": 1,
-        "no_data": 0,
-        "total": 9
+        "ontime": 6,
+        "overdue": 0,
+        "no_data": 2,
+        "total": 8
       },
       {
         "person": "姚家鑫",
         "dept": "交付二部",
-        "ontime": 17,
+        "ontime": 13,
         "overdue": 0,
-        "no_data": 5,
-        "total": 22
+        "no_data": 0,
+        "total": 13
       },
       {
         "person": "袁嘉艺",
         "dept": "交付二部",
-        "ontime": 14,
-        "overdue": 1,
-        "no_data": 3,
-        "total": 18
+        "ontime": 10,
+        "overdue": 2,
+        "no_data": 0,
+        "total": 12
       },
       {
         "person": "赵倩倩",
         "dept": "交付二部",
         "ontime": 2,
         "overdue": 0,
-        "no_data": 1,
-        "total": 3
+        "no_data": 0,
+        "total": 2
       },
       {
         "person": "梁家鑫",
         "dept": "交付三部",
-        "ontime": 4,
+        "ontime": 3,
         "overdue": 0,
-        "no_data": 2,
-        "total": 6
+        "no_data": 1,
+        "total": 4
       },
       {
         "person": "胡磊",
         "dept": "交付一部",
         "ontime": 8,
-        "overdue": 1,
-        "no_data": 4,
-        "total": 13
+        "overdue": 0,
+        "no_data": 3,
+        "total": 11
       },
       {
         "person": "王婉秋",
         "dept": "交付七部",
         "ontime": 9,
         "overdue": 1,
-        "no_data": 6,
-        "total": 16
+        "no_data": 0,
+        "total": 10
       },
       {
         "person": "夏艺",
         "dept": "交付六部",
-        "ontime": 11,
+        "ontime": 19,
         "overdue": 0,
-        "no_data": 5,
-        "total": 16
+        "no_data": 0,
+        "total": 19
       },
       {
         "person": "谷伟",
         "dept": "交付二部",
         "ontime": 0,
         "overdue": 0,
-        "no_data": 1,
-        "total": 1
+        "no_data": 0,
+        "total": 0
       },
       {
         "person": "蔡丽佳",
         "dept": "交付一部",
-        "ontime": 6,
+        "ontime": 2,
         "overdue": 0,
-        "no_data": 0,
-        "total": 6
+        "no_data": 1,
+        "total": 3
       },
       {
         "person": "朱静",
         "dept": "交付一部",
-        "ontime": 3,
+        "ontime": 1,
         "overdue": 0,
-        "no_data": 0,
+        "no_data": 2,
         "total": 3
       }
     ],
     "dept_comm": [
       {
         "dept": "交付一部",
-        "overdue": 3,
-        "no_data": 11,
-        "ontime": 37,
-        "total": 51
+        "overdue": 1,
+        "no_data": 12,
+        "ontime": 25,
+        "total": 38
       },
       {
         "dept": "交付二部",
-        "overdue": 1,
-        "no_data": 13,
-        "ontime": 39,
-        "total": 53
+        "overdue": 3,
+        "no_data": 2,
+        "ontime": 29,
+        "total": 34
       },
       {
         "dept": "交付三部",
-        "overdue": 1,
+        "overdue": 0,
         "no_data": 3,
-        "ontime": 12,
-        "total": 16
+        "ontime": 9,
+        "total": 12
       },
       {
         "dept": "交付六部",
         "overdue": 0,
-        "no_data": 14,
-        "ontime": 17,
-        "total": 31
+        "no_data": 0,
+        "ontime": 27,
+        "total": 27
       },
       {
         "dept": "交付七部",
         "overdue": 1,
-        "no_data": 10,
-        "ontime": 15,
-        "total": 26
+        "no_data": 4,
+        "ontime": 16,
+        "total": 21
       },
       {
         "dept": "总体",
-        "overdue": 6,
-        "no_data": 51,
-        "ontime": 120,
-        "total": 177
+        "overdue": 5,
+        "no_data": 21,
+        "ontime": 106,
+        "total": 132
       }
     ],
     "no_meeting_list": [
       {
-        "supervisor": "李乔乔",
-        "count": 3
+        "supervisor": "夏艺",
+        "count": 10
       },
       {
-        "supervisor": "王楠楠",
-        "count": 2
+        "supervisor": "刘晓楠",
+        "count": 6
       },
       {
-        "supervisor": "赵孜轩",
-        "count": 2
+        "supervisor": "袁嘉艺",
+        "count": 5
       },
       {
         "supervisor": "高伟杰",
-        "count": 2
+        "count": 4
       },
       {
-        "supervisor": "闻静",
-        "count": 2
+        "supervisor": "姚家鑫",
+        "count": 4
       },
       {
-        "supervisor": "刘伊铃",
-        "count": 2
+        "supervisor": "胡磊",
+        "count": 3
       },
       {
-        "supervisor": "胡方圆",
-        "count": 2
-      },
-      {
-        "supervisor": "韩旭",
-        "count": 1
+        "supervisor": "王婉秋",
+        "count": 3
       },
       {
         "supervisor": "陆倩倩",
-        "count": 1
+        "count": 2
       },
       {
-        "supervisor": "赵辰欣",
-        "count": 1
+        "supervisor": "谢子月",
+        "count": 2
       },
       {
-        "supervisor": "张怡",
-        "count": 1
-      },
-      {
-        "supervisor": "徐然",
-        "count": 1
-      },
-      {
-        "supervisor": "苏晓江",
-        "count": 1
-      },
-      {
-        "supervisor": "朱钰茜",
-        "count": 1
-      },
-      {
-        "supervisor": "李玮熠",
-        "count": 1
-      },
-      {
-        "supervisor": "李雪莹",
-        "count": 1
-      },
-      {
-        "supervisor": "雷爱玲",
-        "count": 1
-      },
-      {
-        "supervisor": "叶梦蕾",
-        "count": 1
-      },
-      {
-        "supervisor": "董春晓",
-        "count": 1
-      },
-      {
-        "supervisor": "彭明珠售后",
-        "count": 1
-      },
-      {
-        "supervisor": "张惠敏",
-        "count": 1
-      },
-      {
-        "supervisor": "赵倩倩",
-        "count": 1
-      },
-      {
-        "supervisor": "仓雨欣",
-        "count": 1
-      },
-      {
-        "supervisor": "张姝颖",
-        "count": 1
-      },
-      {
-        "supervisor": "邹雨情",
-        "count": 1
-      },
-      {
-        "supervisor": "徐雅轩",
-        "count": 1
-      },
-      {
-        "supervisor": "胡心伟",
-        "count": 1
-      },
-      {
-        "supervisor": "夏艺",
-        "count": 1
-      },
-      {
-        "supervisor": "丁冰璇",
-        "count": 1
-      },
-      {
-        "supervisor": "夏萱",
-        "count": 1
+        "supervisor": "朱静",
+        "count": 2
       },
       {
         "supervisor": "梁家鑫",
         "count": 1
       },
       {
-        "supervisor": "吕海燕",
+        "supervisor": "王丹娜",
         "count": 1
       },
       {
-        "supervisor": "李宏瑞",
-        "count": 1
-      },
-      {
-        "supervisor": "王浩",
-        "count": 1
-      },
-      {
-        "supervisor": "于陈龙",
-        "count": 1
-      },
-      {
-        "supervisor": "程晓丽",
-        "count": 1
-      },
-      {
-        "supervisor": "焦镜棉",
-        "count": 1
-      },
-      {
-        "supervisor": "顾婷婷",
-        "count": 1
-      },
-      {
-        "supervisor": "葛丹丹",
-        "count": 1
-      },
-      {
-        "supervisor": "胡清盼",
-        "count": 1
-      },
-      {
-        "supervisor": "何香颐",
-        "count": 1
-      },
-      {
-        "supervisor": "张子楠",
-        "count": 1
-      },
-      {
-        "supervisor": "虞梦佳",
-        "count": 1
-      },
-      {
-        "supervisor": "王文静",
-        "count": 1
-      },
-      {
-        "supervisor": "李王琳",
+        "supervisor": "蔡丽佳",
         "count": 1
       }
     ],
@@ -1366,163 +1354,163 @@ const DATA = {
       {
         "dept": "交付三部",
         "type": "CV",
-        "period": "6.29-7.05",
-        "completed": 29,
+        "period": "7.06-7.12",
+        "completed": 4,
         "overdue": 0,
-        "avg_days": 5.6,
+        "avg_days": 6.7,
         "overdue_rate": 0.0
       },
       {
         "dept": "交付三部",
         "type": "PS",
-        "period": "6.29-7.05",
-        "completed": 36,
-        "overdue": 9,
-        "avg_days": 12.6,
-        "overdue_rate": 25.0
+        "period": "7.06-7.12",
+        "completed": 27,
+        "overdue": 6,
+        "avg_days": 13.3,
+        "overdue_rate": 22.2
       },
       {
         "dept": "交付三部",
         "type": "RL",
-        "period": "6.29-7.05",
-        "completed": 43,
+        "period": "7.06-7.12",
+        "completed": 5,
         "overdue": 0,
-        "avg_days": 5.6,
+        "avg_days": 6.5,
         "overdue_rate": 0.0
       },
       {
         "dept": "交付一部",
         "type": "CV",
-        "period": "6.29-7.05",
-        "completed": 34,
-        "overdue": 0,
-        "avg_days": 5.4,
-        "overdue_rate": 0
+        "period": "7.06-7.12",
+        "completed": 7,
+        "overdue": 2,
+        "avg_days": 8.9,
+        "overdue_rate": 28.6
       },
       {
         "dept": "交付一部",
         "type": "PS",
-        "period": "6.29-7.05",
-        "completed": 68,
-        "overdue": 31,
-        "avg_days": 16.0,
-        "overdue_rate": 45.6
-      },
-      {
-        "dept": "交付一部",
-        "type": "RL",
-        "period": "6.29-7.05",
-        "completed": 55,
-        "overdue": 0,
-        "avg_days": 5.3,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "交付七部",
-        "type": "CV",
-        "period": "6.29-7.05",
-        "completed": 21,
-        "overdue": 0,
-        "avg_days": 5.1,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "交付七部",
-        "type": "PS",
-        "period": "6.29-7.05",
-        "completed": 30,
-        "overdue": 13,
-        "avg_days": 18.2,
-        "overdue_rate": 43.3
-      },
-      {
-        "dept": "交付七部",
-        "type": "RL",
-        "period": "6.29-7.05",
-        "completed": 37,
-        "overdue": 0,
-        "avg_days": 5.4,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "交付二部",
-        "type": "CV",
-        "period": "6.29-7.05",
+        "period": "7.06-7.12",
         "completed": 45,
+        "overdue": 20,
+        "avg_days": 16.0,
+        "overdue_rate": 44.4
+      },
+      {
+        "dept": "交付一部",
+        "type": "RL",
+        "period": "7.06-7.12",
+        "completed": 12,
         "overdue": 0,
-        "avg_days": 3.8,
+        "avg_days": 6.7,
+        "overdue_rate": 0
+      },
+      {
+        "dept": "交付七部",
+        "type": "CV",
+        "period": "7.06-7.12",
+        "completed": 3,
+        "overdue": 0,
+        "avg_days": 6.8,
+        "overdue_rate": 0
+      },
+      {
+        "dept": "交付七部",
+        "type": "PS",
+        "period": "7.06-7.12",
+        "completed": 33,
+        "overdue": 7,
+        "avg_days": 13.9,
+        "overdue_rate": 21.2
+      },
+      {
+        "dept": "交付七部",
+        "type": "RL",
+        "period": "7.06-7.12",
+        "completed": 5,
+        "overdue": 0,
+        "avg_days": 9.7,
         "overdue_rate": 0
       },
       {
         "dept": "交付二部",
+        "type": "CV",
+        "period": "7.06-7.12",
+        "completed": 7,
+        "overdue": 1,
+        "avg_days": 13.4,
+        "overdue_rate": 14.3
+      },
+      {
+        "dept": "交付二部",
         "type": "PS",
-        "period": "6.29-7.05",
-        "completed": 55,
-        "overdue": 22,
-        "avg_days": 14.2,
-        "overdue_rate": 40.0
+        "period": "7.06-7.12",
+        "completed": 44,
+        "overdue": 19,
+        "avg_days": 16.9,
+        "overdue_rate": 43.2
       },
       {
         "dept": "交付二部",
         "type": "RL",
-        "period": "6.29-7.05",
-        "completed": 48,
+        "period": "7.06-7.12",
+        "completed": 10,
         "overdue": 0,
-        "avg_days": 4.4,
+        "avg_days": 6.9,
         "overdue_rate": 0
       },
       {
         "dept": "交付六部",
         "type": "CV",
-        "period": "6.29-7.05",
-        "completed": 23,
+        "period": "7.06-7.12",
+        "completed": 4,
         "overdue": 0,
-        "avg_days": 5.3,
+        "avg_days": 7.1,
         "overdue_rate": 0
       },
       {
         "dept": "交付六部",
         "type": "PS",
-        "period": "6.29-7.05",
-        "completed": 29,
+        "period": "7.06-7.12",
+        "completed": 24,
+        "overdue": 1,
+        "avg_days": 12.0,
+        "overdue_rate": 4.2
+      },
+      {
+        "dept": "交付六部",
+        "type": "RL",
+        "period": "7.06-7.12",
+        "completed": 7,
+        "overdue": 0,
+        "avg_days": 7.0,
+        "overdue_rate": 0
+      },
+      {
+        "dept": "总体",
+        "type": "CV",
+        "period": "7.06-7.12",
+        "completed": 25,
         "overdue": 3,
-        "avg_days": 11.2,
-        "overdue_rate": 10.3
-      },
-      {
-        "dept": "交付六部",
-        "type": "RL",
-        "period": "6.29-7.05",
-        "completed": 35,
-        "overdue": 0,
-        "avg_days": 4.9,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "总体",
-        "type": "CV",
-        "period": "6.29-7.05",
-        "completed": 152,
-        "overdue": 0,
-        "avg_days": 4.9,
-        "overdue_rate": 0
+        "avg_days": 9.3,
+        "overdue_rate": 12.0
       },
       {
         "dept": "总体",
         "type": "PS",
-        "period": "6.29-7.05",
-        "completed": 218,
-        "overdue": 78,
-        "avg_days": 14.7,
-        "overdue_rate": 35.8
+        "period": "7.06-7.12",
+        "completed": 173,
+        "overdue": 53,
+        "avg_days": 14.9,
+        "overdue_rate": 30.6
       },
       {
         "dept": "总体",
         "type": "RL",
-        "period": "6.29-7.05",
-        "completed": 218,
+        "period": "7.06-7.12",
+        "completed": 39,
         "overdue": 0,
-        "avg_days": 5.1,
+        "avg_days": 7.2,
         "overdue_rate": 0
       }
     ],
@@ -1531,371 +1519,391 @@ const DATA = {
         "dept": "交付三部",
         "type": "CV",
         "period": "7月",
-        "completed": 19,
+        "completed": 23,
         "overdue": 0,
-        "avg_days": 6.2,
+        "avg_days": 6.4,
         "overdue_rate": 0.0
       },
       {
         "dept": "交付三部",
         "type": "PS",
         "period": "7月",
-        "completed": 19,
-        "overdue": 5,
-        "avg_days": 12.1,
-        "overdue_rate": 26.3
+        "completed": 44,
+        "overdue": 10,
+        "avg_days": 12.7,
+        "overdue_rate": 22.7
       },
       {
         "dept": "交付三部",
         "type": "RL",
         "period": "7月",
-        "completed": 21,
+        "completed": 26,
         "overdue": 0,
-        "avg_days": 5.4,
+        "avg_days": 5.7,
         "overdue_rate": 0.0
       },
       {
         "dept": "交付一部",
         "type": "CV",
         "period": "7月",
-        "completed": 21,
+        "completed": 27,
+        "overdue": 2,
+        "avg_days": 6.8,
+        "overdue_rate": 7.4
+      },
+      {
+        "dept": "交付一部",
+        "type": "PS",
+        "period": "7月",
+        "completed": 78,
+        "overdue": 37,
+        "avg_days": 17.1,
+        "overdue_rate": 47.4
+      },
+      {
+        "dept": "交付一部",
+        "type": "RL",
+        "period": "7月",
+        "completed": 32,
         "overdue": 0,
         "avg_days": 6.0,
         "overdue_rate": 0
       },
       {
-        "dept": "交付一部",
+        "dept": "交付七部",
+        "type": "CV",
+        "period": "7月",
+        "completed": 13,
+        "overdue": 0,
+        "avg_days": 5.4,
+        "overdue_rate": 0
+      },
+      {
+        "dept": "交付七部",
         "type": "PS",
         "period": "7月",
-        "completed": 38,
+        "completed": 56,
         "overdue": 19,
-        "avg_days": 18.1,
-        "overdue_rate": 50.0
-      },
-      {
-        "dept": "交付一部",
-        "type": "RL",
-        "period": "7月",
-        "completed": 20,
-        "overdue": 0,
-        "avg_days": 5.6,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "交付七部",
-        "type": "CV",
-        "period": "7月",
-        "completed": 10,
-        "overdue": 0,
-        "avg_days": 5.0,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "交付七部",
-        "type": "PS",
-        "period": "7月",
-        "completed": 24,
-        "overdue": 12,
-        "avg_days": 14.4,
-        "overdue_rate": 50.0
+        "avg_days": 14.1,
+        "overdue_rate": 33.9
       },
       {
         "dept": "交付七部",
         "type": "RL",
         "period": "7月",
-        "completed": 16,
+        "completed": 21,
         "overdue": 0,
-        "avg_days": 5.0,
+        "avg_days": 6.1,
         "overdue_rate": 0
       },
       {
         "dept": "交付二部",
         "type": "CV",
-        "period": "7月",
-        "completed": 23,
-        "overdue": 0,
-        "avg_days": 5.3,
-        "overdue_rate": 0
-      },
-      {
-        "dept": "交付二部",
-        "type": "PS",
         "period": "7月",
         "completed": 30,
-        "overdue": 12,
-        "avg_days": 14.3,
-        "overdue_rate": 40.0
+        "overdue": 1,
+        "avg_days": 7.2,
+        "overdue_rate": 3.3
+      },
+      {
+        "dept": "交付二部",
+        "type": "PS",
+        "period": "7月",
+        "completed": 71,
+        "overdue": 30,
+        "avg_days": 15.9,
+        "overdue_rate": 42.2
       },
       {
         "dept": "交付二部",
         "type": "RL",
         "period": "7月",
-        "completed": 18,
+        "completed": 29,
         "overdue": 0,
-        "avg_days": 4.3,
+        "avg_days": 5.2,
         "overdue_rate": 0
       },
       {
         "dept": "交付六部",
         "type": "CV",
         "period": "7月",
-        "completed": 14,
+        "completed": 19,
         "overdue": 0,
-        "avg_days": 5.0,
+        "avg_days": 5.4,
         "overdue_rate": 0
       },
       {
         "dept": "交付六部",
         "type": "PS",
         "period": "7月",
-        "completed": 16,
-        "overdue": 2,
-        "avg_days": 12.0,
-        "overdue_rate": 12.5
+        "completed": 39,
+        "overdue": 3,
+        "avg_days": 12.1,
+        "overdue_rate": 7.7
       },
       {
         "dept": "交付六部",
         "type": "RL",
         "period": "7月",
-        "completed": 22,
+        "completed": 30,
         "overdue": 0,
-        "avg_days": 4.9,
+        "avg_days": 5.4,
         "overdue_rate": 0
       },
       {
         "dept": "总体",
         "type": "CV",
         "period": "7月",
-        "completed": 87,
-        "overdue": 0,
-        "avg_days": 5.6,
-        "overdue_rate": 0
+        "completed": 112,
+        "overdue": 3,
+        "avg_days": 6.4,
+        "overdue_rate": 2.7
       },
       {
         "dept": "总体",
         "type": "PS",
         "period": "7月",
-        "completed": 127,
-        "overdue": 50,
-        "avg_days": 14.8,
-        "overdue_rate": 39.4
+        "completed": 288,
+        "overdue": 99,
+        "avg_days": 14.9,
+        "overdue_rate": 34.4
       },
       {
         "dept": "总体",
         "type": "RL",
         "period": "7月",
-        "completed": 97,
+        "completed": 138,
         "overdue": 0,
-        "avg_days": 5.1,
+        "avg_days": 5.7,
         "overdue_rate": 0
       }
     ],
     "ai_rate_by_supervisor": [
       {
-        "name": "彭明珠",
-        "low": 284,
-        "mid": 44,
+        "name": "蒯冰洁",
+        "low": 395,
+        "mid": 9,
         "high": 0
+      },
+      {
+        "name": "彭明珠",
+        "low": 350,
+        "mid": 38,
+        "high": 6
       },
       {
         "name": "郭佳佳",
-        "low": 309,
-        "mid": 6,
-        "high": 0
-      },
-      {
-        "name": "蒯冰洁",
-        "low": 235,
-        "mid": 8,
-        "high": 3
-      },
-      {
-        "name": "李倩倩",
-        "low": 203,
-        "mid": 28,
+        "low": 356,
+        "mid": 9,
         "high": 0
       },
       {
         "name": "徐萍",
-        "low": 179,
-        "mid": 28,
-        "high": 11
-      },
-      {
-        "name": "孙美冬",
-        "low": 115,
-        "mid": 20,
-        "high": 3
-      },
-      {
-        "name": "陈娜",
-        "low": 96,
-        "mid": 40,
-        "high": 1
+        "low": 229,
+        "mid": 30,
+        "high": 6
       },
       {
         "name": "袁嘉艺",
-        "low": 112,
+        "low": 188,
         "mid": 11,
         "high": 0
       },
       {
-        "name": "蔡丽佳",
-        "low": 18,
+        "name": "李倩倩",
+        "low": 178,
+        "mid": 12,
+        "high": 2
+      },
+      {
+        "name": "孙美冬",
+        "low": 175,
+        "mid": 6,
+        "high": 2
+      },
+      {
+        "name": "陈娜",
+        "low": 93,
+        "mid": 33,
+        "high": 17
+      },
+      {
+        "name": "葛丹丹",
+        "low": 27,
         "mid": 1,
         "high": 0
       },
       {
-        "name": "徐逸凡",
-        "low": 7,
-        "mid": 8,
-        "high": 0
-      },
-      {
-        "name": "陆倩倩",
-        "low": 12,
+        "name": "陈燕",
+        "low": 25,
         "mid": 2,
         "high": 0
       },
       {
-        "name": "葛丹丹",
-        "low": 13,
-        "mid": 0,
+        "name": "蔡丽佳",
+        "low": 12,
+        "mid": 1,
+        "high": 2
+      },
+      {
+        "name": "刘晓楠",
+        "low": 10,
+        "mid": 2,
         "high": 0
       },
       {
-        "name": "陈燕",
+        "name": "陆倩倩",
         "low": 11,
         "mid": 1,
         "high": 0
       },
       {
         "name": "高伟杰",
-        "low": 11,
-        "mid": 0,
+        "low": 8,
+        "mid": 1,
+        "high": 0
+      },
+      {
+        "name": "王丹娜",
+        "low": 6,
+        "mid": 3,
         "high": 0
       }
     ],
     "ai_rate_by_dept": [
       {
         "dept": "交付一部",
-        "low": 432,
-        "mid": 89,
-        "high": 4
+        "low": 468,
+        "mid": 54,
+        "high": 23
       },
       {
         "dept": "交付二部",
-        "low": 433,
-        "mid": 19,
+        "low": 555,
+        "mid": 21,
         "high": 0
       },
       {
         "dept": "交付三部",
-        "low": 192,
-        "mid": 28,
-        "high": 11
+        "low": 256,
+        "mid": 31,
+        "high": 6
       },
       {
         "dept": "交付六部",
-        "low": 295,
-        "mid": 45,
-        "high": 0
+        "low": 375,
+        "mid": 40,
+        "high": 6
       },
       {
         "dept": "交付七部",
-        "low": 246,
-        "mid": 8,
-        "high": 3
+        "low": 403,
+        "mid": 10,
+        "high": 0
       }
     ],
     "web_apply_categories": [
       {
-        "category": "李乔乔",
-        "count": 77,
+        "category": "王婉秋",
+        "count": 148,
         "top_items": [
           {
+            "reason": "焦镜棉",
+            "count": 30
+          },
+          {
+            "reason": "张怡",
+            "count": 25
+          },
+          {
+            "reason": "李王琳",
+            "count": 15
+          }
+        ]
+      },
+      {
+        "category": "李乔乔",
+        "count": 131,
+        "top_items": [
+          {
+            "reason": "虞梦佳",
+            "count": 18
+          },
+          {
             "reason": "夏艺",
-            "count": 16
+            "count": 13
           },
           {
-            "reason": "邹雨情",
+            "reason": "韩旭",
             "count": 11
-          },
-          {
-            "reason": "杨文静",
-            "count": 10
           }
         ]
       },
       {
         "category": "胡心伟",
-        "count": 71,
+        "count": 81,
         "top_items": [
           {
-            "reason": "白婧",
-            "count": 37
+            "reason": "王安琪",
+            "count": 20
           },
           {
-            "reason": "胡心伟",
-            "count": 6
+            "reason": "夏萱",
+            "count": 11
           },
           {
-            "reason": "王文静",
-            "count": 6
-          }
-        ]
-      },
-      {
-        "category": "王婉秋",
-        "count": 33,
-        "top_items": [
-          {
-            "reason": "于陈龙",
-            "count": 8
-          },
-          {
-            "reason": "焦镜棉",
-            "count": 6
-          },
-          {
-            "reason": "李雪莹",
-            "count": 5
-          }
-        ]
-      },
-      {
-        "category": "祁棚轩",
-        "count": 27,
-        "top_items": [
-          {
-            "reason": "胡清盼",
+            "reason": "王燕",
             "count": 9
-          },
-          {
-            "reason": "董春晓",
-            "count": 7
-          },
-          {
-            "reason": "赵孜轩",
-            "count": 4
           }
         ]
       },
       {
         "category": "李莹莹",
-        "count": 25,
+        "count": 66,
         "top_items": [
           {
-            "reason": "刘乐怡",
-            "count": 7
-          },
-          {
-            "reason": "吴宇",
-            "count": 7
-          },
-          {
             "reason": "李莹莹",
-            "count": 6
+            "count": 17
+          },
+          {
+            "reason": "王子怡",
+            "count": 14
+          },
+          {
+            "reason": "吴江燕",
+            "count": 11
+          }
+        ]
+      },
+      {
+        "category": "祁棚轩",
+        "count": 53,
+        "top_items": [
+          {
+            "reason": "胡清盼",
+            "count": 12
+          },
+          {
+            "reason": "胡磊",
+            "count": 10
+          },
+          {
+            "reason": "祁棚轩",
+            "count": 10
+          }
+        ]
+      },
+      {
+        "category": "未知组别",
+        "count": 2,
+        "top_items": [
+          {
+            "reason": "王丹娜",
+            "count": 1
+          },
+          {
+            "reason": "徐逸凡售后",
+            "count": 1
           }
         ]
       }
@@ -2348,6 +2356,6 @@ Chart.defaults.plugins.legend.labels.padding = 16;
 })();
 </script>
 </div><!-- /mainContent -->
-<div style="text-align:center;padding:8px;color:#94a3b8;font-size:11px">build 2026-07-06 · v7</div>
+<div style="text-align:center;padding:8px;color:#94a3b8;font-size:11px">build 2026-07-13 · v8</div>
 </body>
 </html>
