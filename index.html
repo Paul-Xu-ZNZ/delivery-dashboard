@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>交付时效数据看板 | 2026年8月</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
@@ -405,10 +408,10 @@
   <div class="header">
     <div>
       <h1><span>交付时效</span>数据看板</h1>
-      <div class="meta">数据周期：<strong>7月27日 — 8月2日</strong></div>
+      <div class="meta">数据周期：<strong id="periodLabel">8月10日 — 8月16日</strong></div>
     </div>
     <div class="meta">
-      更新时间：2026-08-03
+      更新时间：<span id="updatedLabel">2026-08-17</span>
     </div>
   </div>
 
@@ -1978,6 +1981,18 @@ async function verifyPassword() {
   if (!input) return;
   const h = await sha256(input);
   if (h === PW_HASH) {
+    // Update header period/updated from DATA (fixes stale hardcoded dates)
+    const periodLabel = document.getElementById('periodLabel');
+    if (periodLabel && DATA.period) {
+      periodLabel.textContent = DATA.period.split('-').map(part => {
+        const seg = part.split('.');
+        return seg[0] + '月' + seg[1] + '日';
+      }).join(' — ');
+    }
+    const updatedLabel = document.getElementById('updatedLabel');
+    if (updatedLabel && DATA.updated) {
+      updatedLabel.textContent = DATA.updated;
+    }
     document.getElementById('pwOverlay').style.display = 'none';
     document.getElementById('mainContent').style.display = 'block';
   } else {
@@ -2410,6 +2425,6 @@ Chart.defaults.plugins.legend.labels.padding = 16;
 })();
 </script>
 </div><!-- /mainContent -->
-<div style="text-align:center;padding:8px;color:#94a3b8;font-size:11px">build 2026-08-03 · v11</div>
+<div style="text-align:center;padding:8px;color:#94a3b8;font-size:11px">build 2026-08-17 · v13</div>
 </body>
 </html>
