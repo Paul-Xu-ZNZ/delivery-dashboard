@@ -498,7 +498,7 @@
   <div class="chart-grid">
     <div class="card">
       <div class="card-title">按文案主管 · AI率分布</div>
-      <div class="card-subtitle">共 1169 篇文案，按文案直属上级统计 AI 率档位分布</div>
+      <div class="card-subtitle" id="aiRateTotalLabel">按文案直属上级统计 AI 率档位分布（每份文书取最新一次检测，人工报告不计入）</div>
       <canvas id="chartAiRateSupervisor"></canvas>
     </div>
     <div class="card">
@@ -1653,6 +1653,7 @@ const kpiConfig = [
   { label: '首次沟通逾期', value: DATA.kpis.comm_overdue, suffix: '人', color: 'amber', sub: '首次腾会沟通超时' },
   { label: '平均交付天数', value: DATA.kpis.avg_delivery_days, suffix: '天', color: 'green', sub: '超期交付 ' + DATA.kpis.delivery_overdue_count + ' 单' },
   { label: '无腾会记录', value: DATA.kpis.no_meeting_count, suffix: '个客户', color: 'purple', sub: '需补充会议记录' },
+  { label: '逾期未提交网申', value: DATA.kpis.overdue_apply_count, suffix: '条申请', color: 'cyan', sub: '按申请条目统计（非客户数）' },
 ];
 
 const kpiGrid = document.getElementById('kpiGrid');
@@ -1673,6 +1674,16 @@ Chart.defaults.font.size = 12;
 Chart.defaults.color = '#64748b';
 Chart.defaults.plugins.legend.labels.usePointStyle = true;
 Chart.defaults.plugins.legend.labels.padding = 16;
+
+// ---- 动态渲染：AI 率卡片总篇数（由 DATA 实时计算，避免硬编码旧值）----
+(function() {
+  const label = document.getElementById('aiRateTotalLabel');
+  if (!label) return;
+  const n = DATA.ai_rate_by_dept.reduce(
+    (sum, d) => sum + (d.low || 0) + (d.mid || 0) + (d.high || 0), 0);
+  label.textContent = '共 ' + n + ' 篇文书，按文案直属上级统计 AI 率档位分布'
+    + '（每份文书取最新一次检测，人工报告不计入）';
+})();
 
 // ============================================================
 // 1. 提纲设置逾期 - 按售后主管 (Sheet1: total_overdue)
@@ -2067,6 +2078,6 @@ Chart.defaults.plugins.legend.labels.padding = 16;
 })();
 </script>
 </div><!-- /mainContent -->
-<div style="text-align:center;padding:8px;color:#94a3b8;font-size:11px">build 2026-10-19 · v21</div>
+<div style="text-align:center;padding:8px;color:#94a3b8;font-size:11px">build 2026-10-19 · v21.1</div>
 </body>
 </html>
